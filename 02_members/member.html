@@ -42,37 +42,56 @@
       }
     </style>
     <script>
-      $(document).ready(function () {
-        listing();
-      });
+            $(document).ready(function () {
+              listing();
+            });
 
-      function listing() {
-        fetch("/movie")
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            alert(data["msg"]);
-          });
-      }
+            function listing() {
+              fetch("/movie")
+                .then((res) => res.json())
+                .then((data) => {
+                  console.log(data);
+                  alert(data["msg"]);
+                });
+            }
 
-      function posting() {
-        let formData = new FormData();
-        formData.append("sample_give", "샘플데이터");
+            function posting() {
+              let formData = new FormData();
+              formData.append("sample_give", "샘플데이터");
 
-        fetch("/movie", { method: "POST", body: formData })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            alert(data["msg"]);
-          });
-      }
+              fetch("/movie", { method: "POST", body: formData })
+                .then((res) => res.json())
+                .then((data) => {
+                  console.log(data);
+                  alert(data["msg"]);
+                });
+            }
 
-      function open_box() {
-        $("#post-box").show();
-      }
-      function close_box() {
-        $("#post-box").hide();
-      }
+            function showUserInfo() {
+
+      urlSearch = new URLSearchParams(location.search);
+      userName = urlSearch.get('userName')
+
+      //userName 쿼리 스트링
+
+      $.ajax({
+          type: 'GET',
+          url: '/api/member?userName='+userName,
+          data: {},
+          success: function (response) {
+              let tier = response['tier']
+              let rank = response['rank']
+              let lastGames = response['lastGames']
+
+              for (let i = 0; i < lastGames.length; i++) {
+                  let summonerName = lastGames[i]['summonerName']
+
+            function open_box() {
+              $("#post-box").show();
+            }
+            function close_box() {
+              $("#post-box").hide();
+            }
     </script>
   </head>
 
@@ -97,6 +116,7 @@
           <p>블로그 주소</p>
         </div>
       </div>
+      <!--
       <div class="write">
         <button onclick="open_box()">등록하기/수정하기</button>
         <div class="mypost" id="post-box">
@@ -163,7 +183,7 @@
             </button>
           </div>
         </div>
-      </div>
+      </div>-->
     </div>
   </body>
 </html>
